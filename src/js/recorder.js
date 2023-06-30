@@ -61,6 +61,8 @@ export class Recorder {
                     case 'clear':
                         clear();
                         break;
+                        default:
+
                 }
             };
 

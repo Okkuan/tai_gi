@@ -73,14 +73,14 @@ function Body(props) {
     if (window.localStorage.getItem("states")) {
       setStates(JSON.parse(window.localStorage.getItem("states")));
     }
-    // if (currentProject) {
-    //    CallApi('subtitle/eachClassLearnProject/',setStates,'',currentProject.id)
+    if (currentProject) {
+       CallApi('subtitle/eachClassLearnProject/',setStates,'',currentProject.id)
       
-    // }
+    }
   }, []);
   useEffect(() => {
     if (states) {
-    //  window.localStorage.setItem("states", JSON.stringify(states));
+  window.localStorage.setItem("states", JSON.stringify(states));
       window.localStorage.setItem("currentOrder", order);
     }
   }, [states]);

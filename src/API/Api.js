@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 
-const url=process.env.REACT_APP_API_URL;
+const url="https://b345-61-222-207-205.ngrok-free.app";
 
 const api = axios.create({
   baseURL: url,

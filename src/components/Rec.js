@@ -20,7 +20,7 @@ function startRecordingWithTimeLimit(limitTime) {
             console.log('limitTime:'+limitTime)
           audioContext= new AudioContext();
 
-          recorder = new Recorder(audioContext.createMediaStreamSource(stream), { numChannels: 1 });
+          recorder = new Recorder(audioContext.createMediaStreamSource(stream), { numChannels: 2});
           // 開始錄音
           recorder.record();
           timeoutId = setTimeout(() => {
@@ -62,7 +62,7 @@ function startRecordingWithTimeLimit(limitTime) {
 
         // let updateSub=new SubtitleAudioData(sub.id,data.replace("data:audio/wav;base64,"));
         
-        let audio =updateAudio(sub.id,data.replace("data:audio/wav;base64,",""))
+        let _audio =updateAudio(sub.id,data.replace("data:audio/wav;base64,",""))
         .then((response) => {
         
 

@@ -5,11 +5,12 @@ import Body from './components/AchievementBody';
 const Container = styled.div`
 `
 
-function RecordingPage() {
+function RecordingPage(props) {
+  const { currentProject, setCurrentProject } = props
   return (
     <Container>
       <Header content='生活對話：我們一起去看展覽好嗎?' />
-      <Body />
+      <Body currentProject={currentProject} setCurrentProject={setCurrentProject} />
     </Container>
   );
 }

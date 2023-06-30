@@ -83,7 +83,7 @@ function Buttons(props) {
     //     states[order].subtitleVoiceLink.includes("type")
     //   ) {
     //     setaudioSRC(
-    //       "http://localhost:8081" + states[order].subtitleVoiceLink + ""
+    //       "http://https://b345-61-222-207-205.ngrok-free.app:8081" + states[order].subtitleVoiceLink + ""
     //     );
     //   } else {
     //     setaudioSRC(
@@ -309,9 +309,9 @@ function Buttons(props) {
   };
 function checkLink(subtitleVoiceLink){
   if (subtitleVoiceLink.includes("type")) {
-     return "http://localhost:8080" + subtitleVoiceLink + ""
+     return "https://b345-61-222-207-205.ngrok-free.app" + subtitleVoiceLink + ""
   } else {
-    return  "http://localhost:8080" + subtitleVoiceLink + "/type/test"
+    return  "https://b345-61-222-207-205.ngrok-free.app" + subtitleVoiceLink + "/type/test"
   }
 }
   // 定義按鈕對應的函式

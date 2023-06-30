@@ -189,7 +189,7 @@ let audio;
       setminText(states[now].textMinnan);
       settwText(states[now].textTw);
       //audio = document.getElementById("audioPlayer");
-      //audio.src="http://localhost:8081/"+states[now].subtitleVoiceLink+'/test';
+      //audio.src="http://https://b345-61-222-207-205.ngrok-free.app:8081/"+states[now].subtitleVoiceLink+'/test';
     }
     },[order]);
     const handleSave = ()=>{
@@ -256,7 +256,7 @@ let audio;
           <Section type={type}>台語按呢講<Input  type={type} value={minText} onChange={(e) => setminText(e.target.value)}></Input></Section>
           <Section type={type}>華語這樣說<Input  type={type} value={twText} onChange={(e) => settwText(e.target.value)}></Input></Section>
           {type === 0 && <SaveButton onClick={handleSave}>儲存修改</SaveButton>}
-          { states&&order&&(order>1) && <SaveButton onClick={handleCombine}>匯出配音</SaveButton>}
+
         </SectionContainer>
       </Container>
     );

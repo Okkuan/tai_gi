@@ -180,9 +180,9 @@ const CharacterContainer = styled.div`
   justify-content: top;
   align-items: flex-end;
   flex-direction: column;
-  margin: 10px;
+  margin-right: 10px;
   & p {
-    margin-bottom: 34px;
+    margin-bottom: 19px;
     margin-top: 18px;
   }
 `;
@@ -232,8 +232,8 @@ class eachClassLearnProject {
 const CharacterInputContainer = styled.div`
   width: 100px;
   & * {
-    margin-bottom: 18px;
-    margin-top: 18px;
+    margin-bottom: 10px;
+    margin-top: 10px;
   }
 `;
 function NewProjectBody(props) {
@@ -322,6 +322,16 @@ function NewProjectBody(props) {
     // 執行其他相應的操作，例如更新狀態或觸發其他函數
   };
   const saveData = () => {
+    if (learnProjectName === "" ||
+      learnProjectDescription === "" ||
+      selectedGrade === "" ||
+      selectedEduStage === "" ||
+      voiceActor1 === "" ||
+      voiceActor2 === "" ||
+      voiceActor3 === "") {
+      alert.error("請輸入完整資料")
+      return
+    };
     var el_project = new eachClassLearnProject(
   0,
       learnProjectTitle,
@@ -348,21 +358,14 @@ function NewProjectBody(props) {
       el_project.eduStage=new eduStage(selectedEduStage);
       el_project.grade=new grade(selectedGrade);
       el_project.id=currentProject.id;
-      const _VoiceActor1 = voiceActorObjs.find(
-        (actor) => actor.voiceCharacter === "丸仔"
-      );
-      const _VoiceActor2 = voiceActorObjs.find(
-        (actor) => actor.voiceCharacter === "紅圓仔"
-      );
-      const _VoiceActor3 = voiceActorObjs.find(
-        (actor) => actor.voiceCharacter === "旁白"
-      );
-      _VoiceActor1.voiceActor = voiceActor1;
+      const _VoiceActor1 =new voiceActorObj("丸仔",voiceActor1);
       el_project.addVoiceActor(_VoiceActor1);
-      _VoiceActor2.voiceActor = voiceActor2;
+      const _VoiceActor2 =new voiceActorObj("紅圓仔",voiceActor2);
       el_project.addVoiceActor(_VoiceActor2);
-      _VoiceActor3.voiceActor = voiceActor3;
+
+      const _VoiceActor3 =new voiceActorObj("旁白",voiceActor3);
       el_project.addVoiceActor(_VoiceActor3);
+      
       let proj = updateItem(
         "eachClassLearnProject",
         currentProject.id,
@@ -427,7 +430,6 @@ function NewProjectBody(props) {
         <p>教育階段</p>
         <p>專案名稱</p>
         <p>影片說明</p>
-        <p>影片連結</p>
         <p>配音人員</p>
       </LeftContainer>
       <RightContainer>
@@ -472,9 +474,10 @@ function NewProjectBody(props) {
           </Section>
           <Section>
             <Input
+              type="text"
               placeholder="3年2班:A小組-期末分組-第二次錄音"
               value={learnProjectName}
-              required="required"
+              required
               onChange={(e) => setLearnProjectName(e.target.value)}
             />
           </Section>
@@ -484,14 +487,6 @@ function NewProjectBody(props) {
               value={learnProjectDescription}
               required="required"
               onChange={(e) => setLearnProjectDescription(e.target.value)}
-            />
-          </Section>
-          <Section>
-            <Input
-              placeholder=""
-              value={learnProjectLink}
-              required="required"
-              onChange={(e) => setLearnProjectLink(e.target.value)}
             />
           </Section>
           <Section>
