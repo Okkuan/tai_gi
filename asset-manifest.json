@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/tai_gi/static/js/main.b21b7a6b.js",
+    "main.js": "/tai_gi/static/js/main.eee7a480.js",
     "static/media/Logo.png": "/tai_gi/static/media/Logo.f2a61026c0a71976b85b.png",
     "index.html": "/tai_gi/index.html",
-    "main.b21b7a6b.js.map": "/tai_gi/static/js/main.b21b7a6b.js.map"
+    "main.eee7a480.js.map": "/tai_gi/static/js/main.eee7a480.js.map"
   },
   "entrypoints": [
-    "static/js/main.b21b7a6b.js"
+    "static/js/main.eee7a480.js"
   ]
 }
