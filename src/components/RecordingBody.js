@@ -16,7 +16,7 @@ const Container = styled.div`
   align-items: center;
   margin: -20px 0 0 0;
   font-weight: 600;
-  @media screen and (max-width: 380px) {
+  @media screen and (max-width: 580px) {
     margin: 0;
   }
 `;
@@ -55,15 +55,12 @@ function Body(props) {
   useEffect(() => {
     if (currentProject) {
 
-      CallApi('subtitle/eachClassLearnProject/',setStates,'',currentProject.id);
-      
+      CallApi('subtitle/eachClassLearnProject/', setStates, '', currentProject.id);
+
       let proj = getItemById("eachClassLearnProject", currentProject.id)
         .then((response) => {
-          console.log(
-            "eachClassLearnProject:" + JSON.stringify(response)
-          );
           setCurrentProject(response);
-          window.localStorage.setItem("currentProject",JSON.stringify(response));
+          window.localStorage.setItem("currentProject", JSON.stringify(response));
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -74,13 +71,13 @@ function Body(props) {
       setStates(JSON.parse(window.localStorage.getItem("states")));
     }
     if (currentProject) {
-       CallApi('subtitle/eachClassLearnProject/',setStates,'',currentProject.id)
-      
+      CallApi('subtitle/eachClassLearnProject/', setStates, '', currentProject.id)
+
     }
   }, []);
   useEffect(() => {
     if (states) {
-  window.localStorage.setItem("states", JSON.stringify(states));
+      window.localStorage.setItem("states", JSON.stringify(states));
       window.localStorage.setItem("currentOrder", order);
     }
   }, [states]);

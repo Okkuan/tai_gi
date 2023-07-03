@@ -10,7 +10,7 @@ const Container = styled.div`
   padding-top: 50px;
   padding-bottom: 100px;
   font-weight: 600;
-  @media screen and (max-width: 380px) {
+  @media screen and (max-width: 790px) {
     padding-top: 0;
   }
 `;
@@ -18,7 +18,7 @@ const InfoContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  @media screen and (max-width: 380px) {
+  @media screen and (max-width: 790px) {
     flex-direction: column;
   }
 `;
@@ -29,7 +29,7 @@ const LeftContainer = styled.div`
   flex-direction: column;
   border-right: 2px solid #dcd7d2;
   height: 600px;
-  @media screen and (max-width: 380px) {
+  @media screen and (max-width: 790px) {
     flex-direction: row;
     flex-wrap: wrap;
     height: auto;
@@ -41,10 +41,16 @@ const Banner = styled.div`
   background: url(${banner});
   width: 240px;
   height: 65px;
-  @media screen and (max-width: 380px) {
-    margin-right: 50px;
-  }
 `;
+const Navs = styled.div`
+display: flex;
+  justify-content: top;
+  align-items: flex-end;
+  flex-direction: column;
+  @media screen and (max-width: 790px) {
+    flex-direction: row;
+  }
+`
 const Nav = styled.div`
   margin: 5px 20px;
   font-size: 22px;
@@ -55,7 +61,7 @@ const Nav = styled.div`
   &:hover {
     color: #cb4832;
   }
-  @media screen and (max-width: 380px) {
+  @media screen and (max-width: 790px) {
     font-size: 20px;
   }
 `;
@@ -68,7 +74,7 @@ const Icon = styled.div`
     `
     color: #dcd7d2;
 `}
-  @media screen and (max-width:380px) {
+  @media screen and (max-width:790px) {
     margin-left: 5px;
   }
 `;
@@ -76,8 +82,7 @@ const RightContainer = styled.div`
   position: relative;
   height: 600px;
   padding: 0 40px;
-  text-align: center;
-  @media screen and (max-width: 380px) {
+  @media screen and (max-width: 790px) {
     font-size: 20px;
     padding: 0;
   }
@@ -86,13 +91,17 @@ const List = styled.div`
   padding: 13px 0;
   font-size: 22px;
   border-bottom: 2px dotted #dcd7d2;
-  width: 444px;
+  width: 100%;
+  max-width: 444px;
   cursor: pointer;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   &:hover {
     color: #cb4832;
   }
-  @media screen and (max-width: 380px) {
-    width: 370px;
+  @media screen and (max-width: 790px) {
+    max-width: 370px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -130,8 +139,6 @@ function HomePageBody(props) {
     // fetchPorject(selectedGrade, currentPage);
     const grade_response = getProjectPage("eachClassLearnProject", selectedGrade, currentPage, pageSize,1)
       .then((response) => {
-        console.log("grade:" + JSON.stringify(response));
-        console.log(response.totalPages);
         setProjectLists(response.content);
         setTotalPageCount(response.totalPages);
         // Process the created item
@@ -164,6 +171,7 @@ function HomePageBody(props) {
       <InfoContainer>
         <LeftContainer>
           <Banner />
+          <Navs>
           <Nav onClick={() => handleGradeClick(1)}>
             一年級
             <Icon active={selectedGrade === 1}>
@@ -182,10 +190,11 @@ function HomePageBody(props) {
               <BsFillCheckCircleFill />
             </Icon>
           </Nav>
+          </Navs>
         </LeftContainer>
         <RightContainer>
           {projectLists.map((single) => (
-            <List key={single.id} onClick={handleListClick} id={single.id}>
+            <List title={single.learnProjectName} key={single.id} onClick={handleListClick} id={single.id}>
               {single.learnProjectName}
             </List>
           ))}

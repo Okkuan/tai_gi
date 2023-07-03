@@ -14,7 +14,10 @@ const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   margin-bottom: 15px;
-  @media screen and (max-width: 380px) {
+  @media screen and (max-width: 680px) {
+    transform: scale(0.8);
+  }
+  @media screen and (max-width: 500px) {
     transform: scale(0.58);
   }
 `;
@@ -70,7 +73,7 @@ function Buttons(props) {
   useEffect(() => {
     audio = document.getElementById("audioPlayer");
     audio.controls = true;
-    if(!order){
+    if (!order) {
       setOrder(0);
     }
   }, []);
@@ -83,7 +86,7 @@ function Buttons(props) {
     //     states[order].subtitleVoiceLink.includes("type")
     //   ) {
     //     setaudioSRC(
-    //       "http://https://b345-61-222-207-205.ngrok-free.app:8081" + states[order].subtitleVoiceLink + ""
+    //       "http://https://8e0a-2001-b400-e248-4114-f0b4-73b8-f56f-a835.ngrok-free.app:8081" + states[order].subtitleVoiceLink + ""
     //     );
     //   } else {
     //     setaudioSRC(
@@ -158,6 +161,7 @@ function Buttons(props) {
   const stopVideo = (time) => {
     setTimeout(() => {
       player.pauseVideo();
+      isRecording = 0;
     }, time);
   };
 
@@ -177,6 +181,7 @@ function Buttons(props) {
     let now = order;
     // 判斷是否正在錄音中
     if (isRecording === 0) {
+      console.log("99999")
       // 判斷是否為最後一段字幕
       if (now !== states.length - 1) {
         player.seekTo(time(states[now].startTime));
@@ -187,7 +192,6 @@ function Buttons(props) {
       player.unMute();
       player.playVideo();
       isRecording = 2;
-      // 開始錄音
       timer = setInterval(function () {
         const currentTime = player.getCurrentTime();
         // 判斷是否為最後一段字幕
@@ -216,12 +220,7 @@ function Buttons(props) {
     if (isRecording === 0) {
       // 判斷是否為最後一段字幕
       if (now !== states.length - 1) {
-        // if (player.getCurrentTime() > time(states[now].endTime)) {
-        //   now++;
-        //   handleNextStage();
-        // } else {
-        //   player.seekTo(time(states[now].startTime));
-        // }
+        player.seekTo(time(states[now].startTime));
       } else {
         player.seekTo(time(states[now].startTime));
       }
@@ -254,6 +253,7 @@ function Buttons(props) {
 
   // 停止
   const handleRecordingStop = () => {
+    console.log(isRecording)
     if (isRecording === 1) {
       stopRecording();
       player.pauseVideo();
@@ -261,12 +261,27 @@ function Buttons(props) {
     } else if (isRecording === 2) {
       player.pauseVideo();
       isRecording = 0;
+    } else if (isRecording === 3) {
+      player.pauseVideo();
+      document.getElementById('audioPlayer').pause()
+      isRecording = 0;
     }
   };
 
   // 試聽錄音
   const handleListen = () => {
-    playRecording();
+    if (isRecording === 0) {
+      playRecording();
+      player.seekTo(time(states[order].startTime));
+      player.mute();
+      player.playVideo();
+      isRecording = 3;
+      stopVideo(
+        Number(
+          time(states[order + 1].startTime) - time(states[order].startTime)
+        ) * 1000
+      );
+    }
   };
 
   // 重錄錄音
@@ -289,11 +304,11 @@ function Buttons(props) {
     } else {
       startRecording(
         Number(time(states[now + 1].startTime) - time(states[now].startTime)) *
-          1000
+        1000
       );
       stopVideo(
         Number(time(states[now + 1].startTime) - time(states[now].startTime)) *
-          1000
+        1000
       );
     }
   };
@@ -307,13 +322,13 @@ function Buttons(props) {
       clearInterval(timer);
     }
   };
-function checkLink(subtitleVoiceLink){
-  if (subtitleVoiceLink.includes("type")) {
-     return "https://b345-61-222-207-205.ngrok-free.app" + subtitleVoiceLink + ""
-  } else {
-    return  "https://b345-61-222-207-205.ngrok-free.app" + subtitleVoiceLink + "/type/test"
+  function checkLink(subtitleVoiceLink) {
+    if (subtitleVoiceLink.includes("type")) {
+      return "https://8e0a-2001-b400-e248-4114-f0b4-73b8-f56f-a835.ngrok-free.app" + subtitleVoiceLink + ""
+    } else {
+      return "https://8e0a-2001-b400-e248-4114-f0b4-73b8-f56f-a835.ngrok-free.app" + subtitleVoiceLink + "/type/test"
+    }
   }
-}
   // 定義按鈕對應的函式
   const func = [
     handlePreviousStage,
@@ -324,7 +339,6 @@ function checkLink(subtitleVoiceLink){
     handleRecordingAgain,
     handleNextStage,
   ];
-
   return (
     <Container>
       <Section>
@@ -338,7 +352,7 @@ function checkLink(subtitleVoiceLink){
       <AudioPlayer
         id="audioPlayer"
         className="audioPlayer"
-        src={states? (order? checkLink(states[order].subtitleVoiceLink):  checkLink(states[0].subtitleVoiceLink)) :""}
+        src={states ? (order ? checkLink(states[order].subtitleVoiceLink) : checkLink(states[0].subtitleVoiceLink)) : ""}
         controls={true}
       />
     </Container>

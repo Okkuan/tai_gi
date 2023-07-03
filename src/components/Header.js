@@ -6,20 +6,28 @@ import { useState, useEffect } from "react";
 const Container = styled.div`
 width: 100%;
 background: rgb(255,135,115);
+display: flex;
 `
 const Logo = styled.img`
 cursor: pointer;
-@media screen and (max-width:380px) {
+@media screen and (max-width:580px) {
     width: 40%;
 }
 `
+const Buttons = styled.div`
+width: 100%;
+display: flex;
+justify-content: flex-end;
+align-items: center;
+@media screen and (max-width:380px) {
+    transform: scale(0.8);
+}
+`
 const ButtonNew = styled(Link)`
-position: absolute; 
 text-decoration: none;
-right: 90px;
-top: 32px;
 width: 140px;
 height: 50px;
+margin: 10px;
 background: linear-gradient( #29afd0, #008db0);
 border-radius: 5px;
 box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
@@ -40,41 +48,40 @@ transition: box-shadow .1s;
 &:hover {
     box-shadow: 0px 0px 0px 8px rgba(25, 118, 210, 0.16);
 }
-@media screen and (max-width:380px) {
-    transform: scale(0.8);
-    top: 12px;
-    right: 60px;
-}
 `
 const ButtonControl = styled(ButtonNew)`
 right: 20px;
 width: 50px;
 background: linear-gradient( #c8c8c8, #9d9d9d);
-@media screen and (max-width:380px) {
-    right: 10px;
-}
 `
 const Title = styled.div`
+width: 100%;
 color: #FFF;
 font-weight: 600;
 font-size: 35px;
-position: absolute;
 z-index: 2;
-top: 30px;
-left: 0;
+position: absolute;
 right: 0;
+left: 0;
+top: 20px;
 text-align: center;
 pointer-events: none;
-@media screen and (max-width:380px) {
-    transform: scale(0.8);
-    top: 0;
-    left: 120px;
+@media screen and (max-width:1060px) {
+    display: flex;
+    align-items: center;
+    position: static;
+    padding-bottom: 23px; 
+}
+@media screen and (max-width:860px) {
     font-size: 26px;
     text-align: left;
     ${props=>props.type==='NewProject' && `
     top: 20px;
     left: 180px;
     `}
+}
+@media screen and (max-width:560px) {
+    font-size: 20px;
 }
 `
 function Header(props) {
@@ -84,13 +91,13 @@ function Header(props) {
     return (
         <Container>
             <Logo src={logo} onClick={()=>navigate('/Home')}/>
-            <Title type={type}>{content}</Title>
-            {type === 'New' &&
+            {type === 'New'? 
+            <Buttons>
                 <ButtonNew to='/NewProject' onClick={()=>{ window.localStorage.setItem("currentProject",null);setCurrentProject(null)}} type={type}><BsPlusCircleFill /><p>新專案</p></ButtonNew>
-            }
-            {type === 'New' &&
                 <ButtonControl type={type}><BsGearFill /></ButtonControl>
-            }
+            </Buttons>:
+            <Title type={type}>{content}</Title>
+                }
         </Container>
     );
 }

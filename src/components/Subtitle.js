@@ -22,14 +22,20 @@ const Input = styled.input`
   font-size: 22px;
   border-radius: 5px;
   padding: 0 10px;
-  width: 100%;
+  width: calc(100% - 142px);
   height: 45px;
   ::placeholder {
     color: #dddddd;
   }
+  @media screen and (max-width: 380px) {
+  width: 100%;
+  }
 `;
 const SectionContainer = styled.div`
+max-width: 950px;
+margin: auto;
 display: flex;
+position: relative;
 flex-direction: column;
 justify-content: center;
 align-items: center;
@@ -44,6 +50,9 @@ font-weight: 600;
 font-size: 24px;
 color: #6f1818;
 margin: 5px auto;
+p {
+  width: 120px;
+}
 ${prop => prop.type === 1 && `
 color: #aaaaaa;
 `}
@@ -87,27 +96,6 @@ ${prop => prop.type === 1 && `
 color: #aaaaaa;
 `}
 `
-const Input2 = styled.div`
-background: white;
-color: black;
-font-size: 18px;
-border: 1px solid #cccccc;
-border-radius: 5px;
-height: 40px;
-width: calc(100% - 200px);
-margin: 0 12px;
-display: flex;
-justify-content: flex-start;
-align-items: center;
-padding: 0 10px;
-${prop => prop.type === 1 && `
-color: #aaaaaa;
-border: none;
-`}
-@media screen and (max-width: 380px) {
-  width: 370px;
-}
-`
 const SaveButton = styled.div`
 width: 98px;
 height: 36px;
@@ -118,19 +106,19 @@ font-size: 18px;
 display: flex;
 justify-content: center;
 align-items: center;
-top: 167px;
 z-index: 1;
-margin-top: 18px; 
-margin-left: 760px;
 cursor: pointer;
+position: absolute;
+right: 0;
+bottom: -42px;
 box-shadow: 0px 0px 0px 0px rgba(25, 118, 210, 0.16);
 transition: box-shadow .1s;
 &:hover {
   box-shadow: 0px 0px 0px 8px rgba(25, 118, 210, 0.16);
 }
 @media screen and (max-width: 380px) {
+  position: static;
   margin: 0;
-  margin-top: 18px; 
 }
 `
 
@@ -189,7 +177,7 @@ let audio;
       setminText(states[now].textMinnan);
       settwText(states[now].textTw);
       //audio = document.getElementById("audioPlayer");
-      //audio.src="http://https://b345-61-222-207-205.ngrok-free.app:8081/"+states[now].subtitleVoiceLink+'/test';
+      //audio.src="http://https://8e0a-2001-b400-e248-4114-f0b4-73b8-f56f-a835.ngrok-free.app:8081/"+states[now].subtitleVoiceLink+'/test';
     }
     },[order]);
     const handleSave = ()=>{
@@ -236,9 +224,8 @@ let audio;
               <Img type={type}>{'預備'}</Img>
               <Character type={type}>---&nbsp;/<p>&nbsp;---</p></Character>
             </Section>
-          <Section type={type}>台語按呢講<Input  type={type} value={minText} onChange={(e) => setminText(e.target.value)}></Input></Section>
-          <Section type={type}>華語這樣說<Input  type={type} value={twText} onChange={(e) => settwText(e.target.value)}></Input></Section>
-  
+          <Section type={type}><p>台語按呢講</p><Input  type={type} value={minText} onChange={(e) => setminText(e.target.value)}></Input></Section>
+          <Section type={type}><p>華語這樣說</p><Input  type={type} value={twText} onChange={(e) => settwText(e.target.value)}></Input></Section>
           </SectionContainer>
         </Container>
       )
@@ -253,8 +240,8 @@ let audio;
             <Img type={type}>{type === 0 ? '配音' : '預備'}</Img>
             <Character type={type}>{states[now].voiceActor.voiceCharacter}&nbsp;/<p>&nbsp;{states[now].voiceActor.voiceActor}</p></Character>
           </Section>
-          <Section type={type}>台語按呢講<Input  type={type} value={minText} onChange={(e) => setminText(e.target.value)}></Input></Section>
-          <Section type={type}>華語這樣說<Input  type={type} value={twText} onChange={(e) => settwText(e.target.value)}></Input></Section>
+          <Section type={type}><p>台語按呢講</p><Input  type={type} value={minText} onChange={(e) => setminText(e.target.value)}></Input></Section>
+          <Section type={type}><p>華語這樣說</p><Input  type={type} value={twText} onChange={(e) => settwText(e.target.value)}></Input></Section>
           {type === 0 && <SaveButton onClick={handleSave}>儲存修改</SaveButton>}
 
         </SectionContainer>

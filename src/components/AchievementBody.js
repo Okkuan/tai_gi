@@ -20,7 +20,7 @@ const Container = styled.div`
   align-items: center;
   margin: -30px 0 0 0;
   font-weight: 600;
-  @media screen and (max-width: 750px) {
+  @media screen and (max-width: 780px) {
     margin: 0;
   }
 `;
@@ -29,7 +29,10 @@ const Video = styled.div`
   width: 750px;
   aspect-ratio: 750/563;
   box-shadow: 0 0 5px gray;
-  @media screen and (max-width: 750px) {
+  @media screen and (max-width: 780px) {
+    width: 500px;
+  }
+  @media screen and (max-width: 520px) {
     width: 365px;
   }
 `;
@@ -93,8 +96,10 @@ const Info = styled.div`
   height: 100%;
   margin-left: 50px;
   @media screen and (max-width: 750px) {
-    margin-left: 20px;
-    width: 350px;
+    margin: auto;
+  }
+  @media screen and (max-width: 380px) {
+    width: 100%;
   }
 `;
 const InfoText = styled.div`
@@ -103,8 +108,11 @@ const InfoText = styled.div`
   align-items: start;
   margin: 5px 0;
   font-size: 15px;
-  & *:last-child {
-    width: 250px;
+  p:last-of-type {
+    width: calc(100% - 80px);
+  }
+  p:first-of-type {
+    width: 80px;
   }
 `;
 const InfoText2 = styled(InfoText)`
@@ -128,21 +136,21 @@ const Subtitle = styled.div`
   background: rgba(0, 0, 0, 0.5);
 `;
 function TextBlock(props) {
-  if (props&&props.proj&&props.proj.voiceActors) {
+  if (props && props.proj && props.proj.voiceActors) {
     return (
       <Info>
-        <InfoText>配音人員：{props.proj.voiceActors.map((single)=>(single.voiceActor)).join('、')}
+        <InfoText>配音人員：{props.proj.voiceActors.map((single) => (single.voiceActor)).join('、')}
 
         </InfoText>
-  
 
-        {props.proj.voiceActors.map((single)=>
-        
+
+        {props.proj.voiceActors.map((single) =>
+
         (
           <InfoText2 key={single.id}>
-             {single.voiceCharacter}&nbsp;/&nbsp;
-             <p>{single.voiceActor}</p>
-        </InfoText2>
+            {single.voiceCharacter}&nbsp;/&nbsp;
+            <p>{single.voiceActor}</p>
+          </InfoText2>
         ))}
       </Info>
     );
@@ -181,9 +189,7 @@ function Body(props) {
   const [showSubtitle, setShowSubtitle] = useState(false);
   const videoState = useRef(0);
   const timer = useRef("");
-  let audio = new Audio(
-
-  );
+  let audio 
   let videoId;
   if (currentProject) {
     videoId = currentProject.learnResourceLink.match(
@@ -197,7 +203,6 @@ function Body(props) {
   //拿字幕資料
   useEffect(() => {
     if (window.localStorage.getItem("currentProject")) {
-      console.log(window.localStorage.getItem("currentProject"));
       let p = JSON.parse(window.localStorage.getItem("currentProject"));
       setCurrentProject(p);
       // let proj = getAudioCombine(p.id)
@@ -208,7 +213,7 @@ function Body(props) {
       //     console.error("Error:", error);
       //     // Handle any errors
       //   });
-       
+
 
     } else {
     }
@@ -231,8 +236,9 @@ function Body(props) {
       const videoStates = (e) => {
         if (e.data === 1) {
           console.log("影片開始撥放，目前時間:" + player.getCurrentTime());
-          audio.id="AchievementAudio";
-          audio.src = "https://b345-61-222-207-205.ngrok-free.app/subtitle/audio/Result";
+          audio = document.getElementById("audioPlayer")
+          audio.src = "https://8e0a-2001-b400-e248-4114-f0b4-73b8-f56f-a835.ngrok-free.app/subtitle/audio/Result";
+          audio.currentTime = player.getCurrentTime()
           audio.load();
           audio.play();
           subtitleSearch(0, states);
@@ -245,11 +251,11 @@ function Body(props) {
         }
       };
       if (videoState.current === 0) {
-        player.addEventListener("onStateChange", videoStates,true);
+        player.addEventListener("onStateChange", videoStates, true);
         videoState.current = 1;
       }
       return () => {
-       // player.removeEventListener("onStateChange", videoStates,true);
+        // player.removeEventListener("onStateChange", videoStates,true);
       };
     }
   }, [player, states]);
@@ -280,29 +286,23 @@ function Body(props) {
     }
     if (state) {
       setData(state);
-      console.log("play");
       if (time(state.startTime) > player.getCurrentTime() && !showSubtitle) {
-        console.log("111");
         timer.current = setTimeout(() => {
-          console.log("show");
           setShowSubtitle(true);
         }, (time(state.startTime) - player.getCurrentTime()) * 1000);
       } else if (
         time(state.startTime) < player.getCurrentTime() &&
         !showSubtitle
       ) {
-        console.log("222");
         setShowSubtitle(true);
         timer.current = setTimeout(() => {
           setShowSubtitle(false);
         }, (time(state.endTime) - player.getCurrentTime()) * 1000);
       } else if (showSubtitle) {
-        console.log("333");
         timer.current = setTimeout(() => {
           setShowSubtitle(false);
         }, (time(state.endTime) - player.getCurrentTime()) * 1000);
       } else {
-        console.log("444");
         subtitleSearch(1, sss);
       }
     }
@@ -391,6 +391,7 @@ function Body(props) {
         <TextBlock proj={currentProject}></TextBlock>
       </InfoContainer>
       <Button next="/Home" text="cancel" x="1" />
+      <audio id="audioPlayer" style={{ "display": "none" }} controls={true}></audio>
     </Container>
   );
 }
