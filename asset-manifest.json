@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/tai_gi/static/css/main.0e62bb57.css",
-    "main.js": "/tai_gi/static/js/main.28fa9e4b.js",
+    "main.css": "/tai_gi/static/css/main.594d079b.css",
+    "main.js": "/tai_gi/static/js/main.4d3e9e7d.js",
     "static/media/Logo.png": "/tai_gi/static/media/Logo.f2a61026c0a71976b85b.png",
     "index.html": "/tai_gi/index.html",
-    "main.0e62bb57.css.map": "/tai_gi/static/css/main.0e62bb57.css.map",
-    "main.28fa9e4b.js.map": "/tai_gi/static/js/main.28fa9e4b.js.map"
+    "main.594d079b.css.map": "/tai_gi/static/css/main.594d079b.css.map",
+    "main.4d3e9e7d.js.map": "/tai_gi/static/js/main.4d3e9e7d.js.map"
   },
   "entrypoints": [
-    "static/css/main.0e62bb57.css",
-    "static/js/main.28fa9e4b.js"
+    "static/css/main.594d079b.css",
+    "static/js/main.4d3e9e7d.js"
   ]
 }
